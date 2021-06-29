@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:message_board_app/NavigationPages/greeting.dart';
 import 'package:message_board_app/NavigationPages/profile.dart';
 import 'package:message_board_app/NavigationPages/messages.dart';
