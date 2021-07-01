@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart';
+import 'package:message_board_app/NavigationPages/entry_page.dart';
+
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.amberAccent
 
       ),
-      home: MyHomePage(title: 'Snack Chat'),
+      home: EntryPage(),
     );
   }
 }
