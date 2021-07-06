@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:message_board_app/NavigationPages/greeting.dart';
 import 'package:message_board_app/NavigationPages/profile.dart';
-import 'package:message_board_app/NavigationPages/messages.dart';
+import 'package:message_board_app/NavigationPages/lists.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -17,6 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> _children = [
     GreetingPage(Colors.green),
     MessagesPage(Colors.blue),
+    //save space here
     ProfilePage(Colors.amber)
   ];
 
@@ -28,7 +30,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -45,19 +46,19 @@ class _MyHomePageState extends State<MyHomePage> {
         items: [
           BottomNavigationBarItem(
             icon: new Icon(Icons.home),
-            title: new Text('Home'),
-
+            label: ('Home'),
           ),
           BottomNavigationBarItem(
             icon: new Icon(Icons.message),
-            title: new Text('Messages'),
+            label: ('Messages'),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              title: Text('Profile'),
+            icon: Icon(Icons.person),
+            label: ('Profile'),
           )
         ],
-        currentIndex: _currentIndex, // this will be set when a new tab is tapped
+        currentIndex:
+            _currentIndex, // this will be set when a new tab is tapped
         selectedItemColor: Colors.amberAccent,
       ),
     );
