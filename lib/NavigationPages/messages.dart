@@ -22,12 +22,12 @@ class BoardPageState extends State<BoardPage> {
   late User user;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  CollectionReference messages =
-      FirebaseFirestore.instance.collection('messages');
+  CollectionReference board =
+      FirebaseFirestore.instance.collection('board1');
 
   Future<void> addMessage() {
     Text message = Text(myController.text);
-    return messages
+    return board
         .add({
           'username': user.email,
           'uid': user.uid,
@@ -50,23 +50,35 @@ class BoardPageState extends State<BoardPage> {
     }
   }
 
+  final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance.collection('messages').snapshots();
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       body: new Stack(
         children: <Widget>[
-          ListView.builder(
-            itemCount: messages.length,
-            shrinkWrap: true,
-            padding: EdgeInsets.only(top: 10, bottom: 10),
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return Container(
-                padding:
-                    EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
-                child: Text(messages[index].messageContent),
-              );
-            },
+          Center(
+            child: StreamBuilder<QuerySnapshot>(
+                stream: _usersStream,
+                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Something went wrong');
+                  }
+
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Text("Loading");
+                  }
+                  return new ListView(
+                    children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                      Map<dynamic, dynamic>? data = document.data() as Map?;
+                      return new ListTile(
+                        title: new Text(data!['name']),
+                        subtitle: new Text(data!['text']),
+                      );
+                    }).toList(),
+                  );
+                },
+            ),
           ),
           Align(
             alignment: Alignment.bottomLeft,
